@@ -10,6 +10,7 @@ const reload = browserSync.reload;
 
 gulp.task('styles', () => {
   return gulp.src('app/styles/*.scss')
+    .pipe($.wait(1000))
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
