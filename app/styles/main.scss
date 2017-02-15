@@ -1,0 +1,764 @@
+// bower:scss
+// endbower
+
+@import url('https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre:300,500|Josefin+Sans:300,300i,400,600');
+
+@import "./variables";
+
+@import "./mixins";
+
+// BASE STYLES
+
+* {
+  box-sizing: border-box;
+  cursor: default;
+}
+
+[v-cloak] { visibility: hidden; }
+
+a,
+button,
+.button,
+.btn {
+  cursor: pointer;
+  user-select: none;
+}
+
+::selection { background: $pink; }
+
+body {
+  background: #fafafa;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+  > section { overflow: hidden; }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// COMPONENTS
+
+.btn {
+  @include inline-flex(column, nowrap, center, center);
+  padding: 1.6em 1.6em 1.4em;
+  background: $pink;
+  border: 2px solid $pink;
+  font: 600 1.1em "Josefin Sans", sans-serif;
+  color: $white;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  &:hover {
+    background: $white;
+    color: $pink;
+  }
+  @include tablet-portrait-up { font-size: 0.7em; }
+}
+
+.arrow {
+  display: inline-block;
+  position: relative;
+  width: 34px;
+  height: 2px;
+  background: $white;
+  cursor: pointer;
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -8px;
+    width: 16px;
+    height: 16px;
+    border-top: 2px solid $white;
+  }
+  &.left::before {
+    left: 2px;
+    border-left: 2px solid $white;
+    transform: rotate(-45deg);
+  }
+  &.right::before {
+    right: 2px;
+    border-right: 2px solid $white;
+    transform: rotate(45deg);
+  }
+  &.black {
+    background: $black;
+    &::before { border-color: $black; }
+  }
+}
+
+.info {
+  min-width: 150px;
+  margin: 2em;
+  font-size: 9px;
+  @include tablet-portrait-up { font-size: 14px; }
+  @include desktop-up { font-size: 16px; }
+  &.center { text-align: center; }
+  &.left { text-align: left; }
+  &.right {
+    text-align: right;
+    @include phone-only { text-align: left; }
+  }
+  h1 {
+    margin: 10px 0 0;
+    font: 300 2.4em "Frank Ruhl Libre", serif;
+    br {
+      @include phone-only { display: none; }
+    }
+  }
+  h2 {
+    margin: 0;
+    font: 600 1.4em "Josefin Sans", sans-serif;
+    text-transform: uppercase;
+    color: $pink;
+  }
+  .btn { margin-top: 20px; }
+}
+
+.background-text {
+  @extend %absolute;
+  @extend %flex-center;
+  font: 600 calc(10em + 28vw) "Frank Ruhl Libre", serif;
+  color: $white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 0 50px rgba(black, 0.1);
+  z-index: -1;
+  opacity: 0.5;
+}
+
+// MAIN SECTIONS
+
+#home {
+  position: relative;
+  height: 100vh;
+  background-color: $grey4;
+  .background {
+    @extend %absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    &::after {
+      @extend %absolute;
+      content: "";
+      background: rgba(black, 0.4) linear-gradient(to bottom, rgba(black, 0.6), transparent);
+      background-size: 100% 120px;
+      background-repeat: no-repeat;
+      z-index: 1;
+    }
+  }
+  .overlay {
+    @extend %absolute;
+    @include flex(column, nowrap, space-between);
+    margin: 20px;
+    border: 1px solid $border;
+    z-index: 2;
+    @include tablet-portrait-up {
+      margin: 45px;
+      border-top: none;
+    }
+  }
+  .nav-wrapper {
+    position: relative;
+    @include phone-only {
+      @include flex(row, nowrap, space-between, center);
+      padding: 5px;
+      color: $white;
+      &.opened { background: $black; }
+    }
+  }
+  .main-navbar {
+    @include flex(row, nowrap, center, center);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    font: 600 1em "Josefin Sans", sans-serif;
+    text-align: center;
+    color: $white;
+    text-transform: uppercase;
+    z-index: 1;
+    @include phone-only {
+      display: none;
+      background: $black;
+      &.opened {
+        @include flex(column);
+      }
+    }
+    @include tablet-portrait-up {
+      position: relative;
+      top: -20px;
+      margin: 0 -1px;
+      font-size: 0.7em;
+      &::before,
+      &::after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        background: $border;
+      }
+    }
+    .link {
+      padding: 16px;
+      transition: color 0.3s;
+      &:hover,
+      &:focus { color: $pink; }
+      @include phone-only {
+        &:last-child { padding-bottom: 32px; }
+      }
+      @include tablet-portrait-up {
+        padding: 16px 1.5vw 11px;
+        &:first-child { padding-left: 30px; }
+        &:last-child { padding-right: 30px; }
+      }
+      @include tablet-landscape-up { padding: 16px 20px 11px; }
+    }
+    .logo {
+      padding: 0 20px;
+      font: 500 2em "Frank Ruhl Libre", serif;
+      @include phone-only { display: none; }
+    }
+  }
+  .mobile-logo {
+    margin-left: 9px;
+    font: 500 1.75em "Frank Ruhl Libre", serif;
+    text-transform: uppercase;
+    @include tablet-portrait-up { display: none; }
+  }
+  .hamburger {
+    flex: none;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: none;
+    border: 2px solid $white;
+    border-radius: 5px;
+    outline: none;
+    transition: border-radius 0.3s;
+    -webkit-tap-highlight-color: rgba($black, 0);
+    -webkit-tap-highlight-color: transparent;
+    @include tablet-portrait-up { display: none; }
+    span {
+      display: block;
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      height: 4px;
+      background: $white;
+      border-radius: 1px;
+      transition: all 0.3s;
+      cursor: pointer;
+      &.top-bun { top: 20%; }
+      &.patty {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      &.bottom-bun { bottom: 20%; }
+    }
+    &.active {
+      border-radius: 50%;
+      span {
+        left: 10px;
+        right: 10px;
+        &.top-bun {
+          top: 50%;
+          transform: translateY(-50%) rotate(-45deg);
+        }
+        &.patty { opacity: 0; }
+        &.bottom-bun {
+          bottom: 50%;
+          transform: translateY(50%) rotate(45deg);
+        }
+      }
+    }
+  }
+  .navigation {
+    @include flex(row, nowrap, space-between);
+    .button {
+      @extend %flex-center;
+      padding: 40px 2vw;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+      @include phone-only { display: none; }
+      @include tablet-landscape-up { padding: 40px; }
+      &:hover { opacity: 1; }
+    }
+    .title {
+      @extend %flex-center;
+      flex: 1;
+      text-align: center;
+      @include phone-only { font-size: 3vw; }
+      h2 {
+        margin: 0;
+        font: 300 2.5em "Frank Ruhl Libre", serif;
+        color: $white;
+      }
+      h1 {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        margin: 15px 0 0;
+        font: 600 3em "Josefin Sans", sans-serif;
+        color: $pink;
+        white-space: nowrap;
+        text-transform: uppercase;
+        span { @extend %absolute; }
+      }
+    }
+  }
+  .pagination {
+    @include flex(row, nowrap, center, center);
+    position: relative;
+    bottom: -13px;
+    @include phone-only { visibility: hidden; }
+    > button {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      margin: 8px;
+      padding: 0;
+      background: $border;
+      border: none;
+      transform: rotate(45deg);
+      cursor: pointer;
+      transition: background 0.3s;
+      &.active,
+      &:focus,
+      &:hover {
+        outline: none;
+        background: $pink;
+      }
+    }
+  }
+}
+
+#services {
+  @extend %flex-center;
+  position: relative;
+  padding: 20px 0;
+  @include tablet-portrait-up { padding: 20px 0 75px; }
+  @include tablet-landscape-up { padding: 130px 0; }
+  .links {
+    @extend %flex-center;
+    width: 100%;
+    max-width: $content;
+    margin-top: 20px;
+    @include tablet-landscape-up {
+      @include flex(row, nowrap, space-between);
+      margin-top: 60px;
+    }
+    a {
+      @include flex(column, nowrap, flex-end, center);
+      position: relative;
+      flex: none;
+      width: 100%;
+      height: 200px;
+      margin-bottom: 1em;
+      padding: 0 0 32px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      @include tablet-portrait-up {
+        width: 300px;
+        height: 300px;
+      }
+      @include tablet-landscape-up {
+        margin: 0;
+        max-width: 300px;
+      }
+      @for $i from 1 through 3 {
+        &:nth-of-type(#{$i}) {
+          background-image: url("../images/services_0#{$i}.jpg");
+        }
+      }
+      &::after {
+        @extend %absolute;
+        content: '';
+        background: rgba($pink, 0.8);
+        opacity: 0;
+        z-index: 1;
+        transition: opacity 0.3s;
+      }
+      &:hover::after { opacity: 1; }
+      span {
+        font: 600 1.4em "Josefin Sans", sans-serif;
+        color: $white;
+        text-transform: uppercase;
+        z-index: 2;
+      }
+    }
+  }
+  &::after {
+    @extend .background-text;
+    content: "Services";
+  }
+}
+
+#albums {
+  @include flex(row, nowrap);
+  position: relative;
+  .info-wrapper {
+    @extend %flex-center;
+    flex: 1;
+    @include phone-only {
+      position: absolute;
+      left: 10%;
+      top: 50%;
+      right: 10%;
+      background: rgba($white, 0.85);
+      z-index: 3;
+      transform: translateY(-50%);
+    }
+  }
+  .gallery {
+    flex: 1;
+    width: 50%;
+    height: 540px;
+    @include phone-only { height: 480px; }
+    .grid-sizer { width: 25%; }
+    .image {
+      $width: 25%;
+      $height: calc(100% / 3);
+      @extend %flex-center;
+      position: relative;
+      width: $width;
+      height: $height;
+      background-repeat: no-repeat;
+      background-size: cover;
+      cursor: pointer;
+      @include phone-only { height: 50%; }
+      @for $i from 1 through 7 {
+        &:nth-of-type(#{$i}) {
+          background-image: url("../images/albums_0#{$i}.jpg");
+        }
+      }
+      &::after {
+        @extend %absolute;
+        content: '';
+        background: rgba($pink, 0.8);
+        opacity: 0;
+        z-index: 1;
+        transition: opacity 0.3s;
+      }
+      &:hover {
+        &::after,
+        .arrow { opacity: 1; }
+      }
+      &.horizontal { width: $width * 2; }
+      &.vertical {
+        height: calc(#{$height} * 2);
+        @include phone-only {
+          width: $width;
+          height: 50%;
+        }
+      }
+      .arrow {
+        opacity: 0;
+        z-index: 2;
+      }
+    }
+  }
+  &::after {
+    @extend .background-text;
+    content: "Albums";
+  }
+}
+
+#thoughts {
+  @extend %flex-center;
+  @include flex(column, nowrap, center, stretch);
+  position: relative;
+  padding: 20px 0;
+  @include tablet-portrait-up { padding: 20px 0 75px; }
+  @include tablet-landscape-up { padding: 130px 0; }
+  .info { align-self: center; }
+  .navigation {
+    @include flex(row, nowrap, space-around, center);
+    margin-top: 20px;
+    @include tablet-landscape-up { margin-top: 80px; }
+    .button {
+      @extend %flex-center;
+      flex: none;
+      padding: 20px;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+      z-index: 1;
+      &:hover { opacity: 1; }
+      @include tablet-portrait-up { padding: 40px; }
+    }
+  }
+  .items-wrapper {
+    flex: 1;
+    height: 590px;
+    position: relative;
+    max-width: $content;
+    @include tablet-landscape-up { height: 280px; }
+  }
+  .items {
+    @include flex(column);
+    @extend %absolute;
+    @include tablet-landscape-up {
+      @include flex(row, nowrap, space-between);
+    }
+  }
+  .item {
+    position: relative;
+    flex: 1;
+    max-height: 280px;
+    padding: 15px 20px;
+    background: $grey1;
+    overflow: hidden;
+    &:first-of-type { margin: 0 0 30px; }
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 30px;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(to bottom, transparent, $grey1);
+    }
+    @include tablet-portrait-up { padding: 35px 45px; }
+    @include tablet-landscape-up {
+      &:first-of-type { margin: 0 30px 0 0; }
+    }
+    > * { cursor: inherit; }
+    .title {
+      margin: 0;
+      font: 300 1.2em "Frank Ruhl Libre", serif;
+      @include tablet-portrait-up { font-size: 1.4em; }
+    }
+    .date {
+      display: inline-block;
+      margin-top: 20px;
+      font: 600 0.7em "Josefin Sans", sans-serif;
+      color: $pink;
+      text-transform: uppercase;
+    }
+    .text {
+      margin: 0;
+      font: 300 0.9em/1.4 "Josefin Sans", sans-serif;
+      color: $grey2;
+      margin-top: 21px;
+      font-style: italic;
+    }
+  }
+  &::after {
+    @extend .background-text;
+    content: "Thoughts";
+  }
+}
+
+#about {
+  @include flex(column);
+  position: relative;
+  @include tablet-portrait-up {
+    @include flex(row, wrap);
+    height: 540px;
+  }
+  .photo {
+    flex: 1;
+    min-width: 200px;
+    min-height: 250px;
+    background: url("../images/unsplash/lzeaynwm4ro-camila-cordeiro.jpg") no-repeat center;
+    background-size: cover;
+    @include phone-only {
+      order: 2;
+      margin-top: 20px;
+    }
+  }
+  .info-wrapper {
+    @extend %flex-center;
+    flex: 1;
+  }
+  &::after {
+    @extend .background-text;
+    content: "About";
+  }
+}
+
+#shop {
+  @include flex(column, nowrap, center);
+  position: relative;
+  padding: 20px 0;
+  @include tablet-portrait-up { padding: 20px 0 75px; }
+  @include tablet-landscape-up { padding: 110px 0 130px; }
+  .info { align-self: center; }
+  .navigation {
+    @include flex(row, nowrap, space-between, center);
+    .button {
+      @extend %flex-center;
+      flex: none;
+      padding: 20px 10px;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+      z-index: 1;
+      &:hover { opacity: 1; }
+      @include tablet-portrait-up { padding: 40px; }
+    }
+  }
+  .items-wrapper {
+    flex: 1;
+    position: relative;
+    max-width: $content;
+    margin-top: 20px;
+    @include tablet-portrait-up {
+      transform: translateY(-20px);
+      margin-top: 60px;
+    }
+    &.initialized {
+      .items {
+        @extend %absolute;
+        bottom: auto;
+      }
+    }
+  }
+  .items {
+    @include flex(row, wrap, space-between, stretch);
+    .item {
+      @extend %flex-center;
+      position: relative;
+      width: 100%;
+      height: 300px;
+      margin-bottom: 20px;
+      padding: 15px 12px;
+      background: $grey1;
+      @include tablet-portrait-up { width: 47%; }
+      @include tablet-landscape-up { width: 31%; }
+      > * { cursor: inherit; }
+      &:hover img {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px 5px rgba($black, 0.4);
+      }
+      .price {
+        position: absolute;
+        top: 15px;
+        left: 12px;
+        font: 500 1.4em "Frank Ruhl Libre", serif;
+        color: $pink;
+      }
+      .photo {
+        @extend %flex-center;
+        width: 100%;
+        height: 100%;
+        max-width: 200px;
+        max-height: 200px;
+        img {
+          border: 2px solid $white;
+          box-shadow: 0 0 30px rgba($black, 0.3);
+          cursor: inherit;
+          transition: all 0.3s;
+          &.horizontal {
+            width: 100%;
+            height: auto;
+          }
+          &.vertical {
+            width: auto;
+            height: 90%;
+          }
+        }
+      }
+    }
+  }
+  &::after {
+    @extend .background-text;
+    content: "My shop";
+  }
+}
+
+#contact {
+  @include flex(row, wrap);
+  position: relative;
+  .info-wrapper {
+    @extend %flex-center;
+    flex: 1;
+  }
+  .details {
+    @extend %flex-center;
+    flex: 1;
+    min-width: 165px;
+    padding: 10px 0;
+    background: $pink;
+    @include phone-only { margin-top: 20px; }
+    @include tablet-portrait-up { padding: 75px 0; }
+    dl {
+      @include flex(column);
+      width: 65%;
+      margin: 0;
+      color: $white;
+      dt {
+        padding: 40px 0 0;
+        font: 400 0.7em "Josefin Sans", sans-serif;
+        text-transform: uppercase;
+      }
+      dd {
+        margin: 0;
+        padding: 10px 0 40px;
+        font: 300 1em "Frank Ruhl Libre", serif;
+        &:not(:last-of-type) { border-bottom: 1px solid rgba(white, 0.25); }
+        @include tablet-portrait-up { font-size: 1.4em; }
+      }
+    }
+  }
+  &::after {
+    @extend .background-text;
+    content: "Contact";
+  }
+}
+
+#footer {
+  margin-top: 70px;
+  background: $black;
+  color: $white;
+  @include tablet-portrait-up { margin-top: 128px; }
+  .content {
+    @include flex(column, nowrap, center);
+    max-width: $content;
+    margin: 0 auto;
+    padding: 50px 0;
+    text-align: center;
+    @include tablet-portrait-up { padding: 110px 0; }
+  }
+  nav {
+    @include flex(row, wrap, center);
+    font: 600 0.7em "Josefin Sans", sans-serif;
+    text-transform: uppercase;
+    .link {
+      padding: 12px;
+      transition: color 0.3s;
+      @include tablet-portrait-up { padding: 18px; }
+      &:hover,
+      &:focus { color: $pink; }
+    }
+  }
+  .social-networks {
+    margin: 32px 0;
+    padding: 22px 0;
+    border-top: 1px solid $grey3;
+    border-bottom: 1px solid $grey3;
+    a {
+      padding: 14px;
+      font-size: 2em;
+      @include tablet-portrait-up {
+        padding: 18px;
+        font-size: 2.7em;
+      }
+      &:hover,
+      &:focus { color: $pink; }
+    }
+  }
+  .copyrights {
+    margin-top: 10px;
+    font: 300 1.1em/1.3 "Frank Ruhl Libre", serif;
+    letter-spacing: 0.03em;
+    @include tablet-portrait-up { font-size: 1.3em; }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "name": "wwc28",
+  "private": true,
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "vue": "^2.1.10",
+    "jquery": "~2.1.1",
+    "masonry": "^4.1.1",
+    "normalize-css": "normalize.css#^5.0.0",
+    "hammerjs": "hammer.js#^2.0.8",
+    "animate.css": "^3.5.2",
+    "components-font-awesome": "^4.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  },
+  "overrides": {
+    "lodash": {
+      "main": [
+        "dist/lodash.min.js"
+      ]
+    },
+    "vue": {
+      "main": [
+        "dist/vue.min.js"
+      ]
+    },
+    "jquery": {
+      "main": [
+        "dist/jquery.min.js"
+      ]
+    },
+    "masonry": {
+      "main": [
+        "dist/masonry.pkgd.min.js"
+      ]
+    },
+    "outlayer": {
+      "main": [
+        "item.js",
+        "outlayer.js"
+      ]
+    },
+    "hammerjs": {
+      "main": [
+        "hammer.min.js"
+      ]
+    },
+    "animate.css": {
+      "main": [
+        "animate.min.css"
+      ]
+    },
+    "components-font-awesome": {
+      "main": [
+        "css/font-awesome.min.css"
+      ]
+    }
+  }
+}
