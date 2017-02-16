@@ -426,7 +426,7 @@ a {
     .grid-sizer { width: 25%; }
     .image {
       $width: 25%;
-      $height: calc(100% / 3);
+      $height: percentage(1 / 3);
       @extend %flex-center;
       position: relative;
       width: $width;
