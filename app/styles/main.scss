@@ -94,7 +94,7 @@ a {
   min-width: 150px;
   margin: 2em;
   font-size: 9px;
-  @include tablet-portrait-up { font-size: 14px; }
+  @include tablet-portrait-up { font-size: 13px; }
   @include desktop-up { font-size: 16px; }
   &.center { text-align: center; }
   &.left { text-align: left; }
@@ -116,6 +116,14 @@ a {
     color: $pink;
   }
   .btn { margin-top: 20px; }
+  @include tablet-portrait-up {
+    #services & h1 { max-width: 12.5em; }
+    #albums & h1 { max-width: 9.5em; }
+    #thoughts & h1 { max-width: 10.5em; }
+    #about & h1 { max-width: 9em; }
+    #shop & h1 { max-width: 10em; }
+    #contact & h1 { max-width: 8.5em; }
+  }
 }
 
 .background-text {
@@ -675,8 +683,9 @@ a {
 }
 
 #contact {
-  @include flex(row, wrap);
+  @include flex(column);
   position: relative;
+  @include tablet-portrait-up { flex-direction: row; }
   .info-wrapper {
     @extend %flex-center;
     flex: 1;
@@ -684,16 +693,16 @@ a {
   .details {
     @extend %flex-center;
     flex: 1;
-    min-width: 165px;
     padding: 10px 0;
     background: $pink;
     @include phone-only { margin-top: 20px; }
     @include tablet-portrait-up { padding: 75px 0; }
     dl {
       @include flex(column);
-      width: 65%;
+      width: 85%;
       margin: 0;
       color: $white;
+      @include tablet-portrait-up { width: 65%; }
       dt {
         padding: 40px 0 0;
         font: 400 0.7em "Josefin Sans", sans-serif;
