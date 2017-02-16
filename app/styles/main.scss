@@ -630,11 +630,14 @@ a {
       @extend %flex-center;
       position: relative;
       width: 100%;
-      height: 300px;
       margin-bottom: 20px;
-      padding: 15px 12px;
+      padding: 45px 12px 20px;
       background: $grey1;
-      @include tablet-portrait-up { width: 47%; }
+      @include tablet-portrait-up {
+        width: 47%;
+        height: 300px;
+        padding: 15px 12px;
+      }
       @include tablet-landscape-up { width: 31%; }
       > * { cursor: inherit; }
       &:hover img {
@@ -645,28 +648,22 @@ a {
         position: absolute;
         top: 15px;
         left: 12px;
-        font: 500 1.4em "Frank Ruhl Libre", serif;
+        font: 500 1.1em "Frank Ruhl Libre", serif;
         color: $pink;
+        @include tablet-portrait-up { font-size: 1.4em; }
       }
       .photo {
         @extend %flex-center;
-        width: 100%;
-        height: 100%;
+        position: relative;
+        height: 200px;
         max-width: 200px;
-        max-height: 200px;
         img {
+          max-width: 100%;
+          max-height: 100%;
           border: 2px solid $white;
           box-shadow: 0 0 30px rgba($black, 0.3);
           cursor: inherit;
           transition: all 0.3s;
-          &.horizontal {
-            width: 100%;
-            height: auto;
-          }
-          &.vertical {
-            width: auto;
-            height: 90%;
-          }
         }
       }
     }
