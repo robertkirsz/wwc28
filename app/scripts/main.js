@@ -132,7 +132,6 @@ const Shop = new Vue({
   data: {
     itemsHeight: 0,
     initialized: false,
-    currentMediaQuery: null,
     direction: 'right',
     index: 0
   },
