@@ -4,7 +4,6 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "vue": "^2.1.10",
-    "jquery": "~2.1.1",
     "masonry": "^4.1.1",
     "normalize-css": "normalize.css#^5.0.0",
     "hammerjs": "hammer.js#^2.0.8",
@@ -24,11 +23,6 @@
     "vue": {
       "main": [
         "dist/vue.min.js"
-      ]
-    },
-    "jquery": {
-      "main": [
-        "dist/jquery.min.js"
       ]
     },
     "masonry": {
