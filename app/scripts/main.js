@@ -1,7 +1,7 @@
 const Home = new Vue({
   el: '#home',
   data: {
-    windowHeight: 0,
+    windowHeight: null,
     mobileMenuOpened: false,
     homeSliderInterval: null,
     photoIndex: 0,
@@ -20,7 +20,7 @@ const Home = new Vue({
       return { 'background-image': `url(images/${this.photos[this.photoIndex].url})` }
     },
     homeStyle () {
-      return this.windowHeight ? { height: `${this.windowHeight}px` } : {}
+      return  { height: this.windowHeight ? `${this.windowHeight}px` : '100vh' }
     }
   },
   methods: {
@@ -34,14 +34,24 @@ const Home = new Vue({
       this.mobileMenuOpened = !this.mobileMenuOpened
     },
     handleInterval () {
-      const windowWidth = window.innerWidth
-
-      if (windowWidth < 600 && !this.homeSliderInterval) {
+      const { innerWidth, innerHeight } = window
+      // If mobile size...
+      if (innerWidth < 600 && !this.homeSliderInterval) {
+        // Make home section's height equal to window's height (it prevents
+        // screen jumping when mobile browser's address bar hides on scrolling down)
+        this.windowHeight = innerHeight
+        // Start slider interval
         this.homeSliderInterval = setInterval(this.slideRight, 5000)
+        // Add global event listener for hiding mobile menu
         window.addEventListener('click', this.closeMobileMenu)
-      } else if (windowWidth >= 600 && this.homeSliderInterval) {
+      // If bigger than mobile...
+      } else if (innerWidth >= 600 && this.homeSliderInterval) {
+        // Stop slider interval
         clearInterval(this.homeSliderInterval)
         this.homeSliderInterval = null
+        // Make home section fluid again
+        this.windowHeight = null;
+        // Close mobile menu and remove it's event listener
         this.closeMobileMenu()
         window.removeEventListener('click', this.closeMobileMenu)
       }
@@ -58,7 +68,6 @@ const Home = new Vue({
     }
   },
   mounted () {
-    this.windowHeight = window.innerHeight
     this.handleInterval()
     window.addEventListener('resize', this.handleInterval)
   },
@@ -118,8 +127,8 @@ const Thoughts = new Vue({
     }
   },
   mounted () {
+    // Initialize swipe
     const hammertime = new Hammer(this.$el)
-
     hammertime.on('swipe', e => {
       if (e.deltaX < 0) this.slideLeft()
       if (e.deltaX > 0) this.slideRight()
@@ -172,9 +181,8 @@ const Shop = new Vue({
     this.calculateHeight()
     window.addEventListener('resize', this.windowResize)
     this.initialized = true
-
+    // Initialize swipe
     const hammertime = new Hammer(this.$el)
-
     hammertime.on('swipe', e => {
       if (e.deltaX < 0) this.slideLeft()
       if (e.deltaX > 0) this.slideRight()
